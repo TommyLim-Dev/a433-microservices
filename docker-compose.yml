@@ -1,0 +1,52 @@
+#Menggunakan Docker Compose versi 2 atau lebih.
+version: "3.7"
+
+services:
+  # Membuat service untuk node app (item-app)
+  app:
+    #Menggunakan image item-app dari GitHub Packages
+    image: "ghcr.io/tommylim-dev/item-app:v1"
+
+    #Memberi nama container
+    container_name: item-app
+
+    #Menerapkan restart policy pada berkas docker-compose.yml agar container selalu restart ketika terhenti
+    restart: always
+
+    #Menjalakan npm
+    command: sh -c "npm start"
+
+    #Melakukan port mapping agar dapat diakses dari port 80 di host
+    ports:
+      - 80:8080
+
+    #Menentukan working directory
+    working_dir: /app
+
+    #Menentukan Volumes
+    volumes:
+      - /app
+
+    #link dengan service mongo
+    links:
+      - mongo
+
+  # Membuat service untuk mongodb (item-db)
+  mongo:
+    #Menggunakan image mongo:3 dari Docker Hub.
+    image: mongo:3
+
+    #Memberi nama kontainer
+    container_name: item-db
+
+    #Melakukan port mapping agar dapat diakses dari port 27017 di host
+    ports:
+      - 27017:27017
+
+    #Memakai volume bernama app-db dengan target /data/db di container.
+    volumes:
+      - app-db:/data/db
+
+#Memiliki satu buah volume bernama app-db.
+volumes:
+  app-db:
