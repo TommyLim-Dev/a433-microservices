@@ -26,6 +26,9 @@ services:
     #Menggunakan image mongo:3 dari Docker Hub.
     image: mongo:3
 
+    #Menerapkan restart policy pada berkas docker-compose.yml agar container selalu restart ketika terhenti
+    restart: always
+
     #Memberi nama kontainer
     container_name: item-db
 
