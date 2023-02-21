@@ -15,3 +15,6 @@ RUN npm install --production --unsafe-perm && npm run build
 
 #menentukan bahwa aplikasi berjalan pada port 8080
 EXPOSE 8080
+
+#Menjalakan node
+CMD ["npm", "start"]
